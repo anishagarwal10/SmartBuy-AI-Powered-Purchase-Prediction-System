@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Prediction</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>🛒 Purchase Prediction</h2>
+
+        <form action="/predict" method="post" onsubmit="return validateForm()">
+
+            <div class="form-group">
+                <input type="number" name="🧾 Account Page Visits" placeholder="🧾 Account Page Visits" required>
+            </div>
+
+            <div class="form-group">
+                <input type="number" step="0.01" name="⏱ Time on Account Pages (sec)"
+                    placeholder="⏱ Time on Account Pages (sec)" required>
+            </div>
+
+            <div class="form-group">
+                <input type="number" name="🛍 Products Viewed" placeholder="🛍 Products Viewed" required>
+            </div>
+
+            <div class="form-group">
+                <input type="number" step="0.01" name="⏳ Time on Products (sec)" placeholder="⏳ Time on Products (sec)"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <input type="number" step="0.01" name="🚪 Left After 1 Page (%)" placeholder="🚪 Left After 1 Page (%)"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <input type="number" step="0.01" name="📉 Exit Percentage (%)" placeholder="📉 Exit Percentage (%)"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <select name="Month" required>
+                    <option value="">Select Month</option>
+                    <option>Jan</option>
+                    <option>Feb</option>
+                    <option>Mar</option>
+                    <option>May</option>
+                    <option>June</option>
+                    <option>Jul</option>
+                    <option>Aug</option>
+                    <option>Sep</option>
+                    <option>Oct</option>
+                    <option>Nov</option>
+                    <option>Dec</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <select name="VisitorType" required>
+                    <option value="">Visitor Type</option>
+                    <option>Returning_Visitor</option>
+                    <option>New_Visitor</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <select name="Weekend" required>
+                    <option value="">Weekend?</option>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                </select>
+            </div>
+
+            <button type="submit">Predict</button>
+
+        </form>
+
+        <div class="result">
+            {{ prediction_text }}
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            let inputs = document.querySelectorAll("input, select");
+
+            for (let i = 0; i < inputs.length; i++) {
+                if (inputs[i].value === "") {
+                    alert("Please fill all fields!");
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+
+</body>
+
+</html>
